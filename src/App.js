@@ -1,24 +1,32 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react'
+import { BrowserRouter, Route, Switch } from 'react-router-dom'
+import { Layout, NavBar } from './components'
+import { CategorySwitch } from './pages'
+
+const categories = [
+  { title: 'React', path: '/react' },
+  { title: 'Redux', path: '/redux' },
+  { title: 'Compasso', path: '/compasso' },
+]
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <BrowserRouter>
+      <Layout>
+        <Layout.Navigation>
+          <NavBar>
+            {categories.map((category, index) => (
+              <NavBar.Item {...category} key={index} />
+            ))}
+          </NavBar>
+        </Layout.Navigation>
+        <Layout.Body>
+          <Switch>
+            <Route path="/:category" component={CategorySwitch} />
+          </Switch>
+        </Layout.Body>
+      </Layout>
+    </BrowserRouter>
   );
 }
 

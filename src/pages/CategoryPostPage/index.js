@@ -1,17 +1,17 @@
 import React from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom'
 import { Post } from '../../components'
-import { ApiService } from '../../services'
-
-const api = new ApiService()
+import { categoryRequest } from '../../redux/actions/categoryActions'
 
 export const CategoryPostPage = () => {
+  const dispatch = useDispatch()
   const { category } = useParams()
-  const [posts, setPosts] = React.useState([])
+  const posts = useSelector(state => state.categoryReducer.posts)
 
   React.useEffect(() => {
-    api.getPostsByCategory(category).then(setPosts)
-  }, [category])
+    dispatch(categoryRequest(category))
+  }, [dispatch, category])
 
   return (
     <>
